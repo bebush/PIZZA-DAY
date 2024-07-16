@@ -1,0 +1,79 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.logo{
+    width: 100vw;
+    height: 12.5vh;
+    background-color:black;
+    color: white;
+    text-align: center;   
+}
+.logo p{
+    position: relative;
+    top: 30px;    
+}
+.lista-opciones p{
+ text-align: center;
+}
+.lista-opciones{
+    background-color: grey;
+    display: grid;
+    height: 80vh;    
+}
+
+
+.list-items{
+    background-color: white;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    border-radius: 10px;
+    
+}
+
+.pie-main{
+    background-color: black;
+    color: white; 
+    height: 7.5vh;
+    text-align: center;
+    
+}
+/*----------- derivados --------------------*/
+
+.pie{
+   background-color: black;
+   color: white;
+   height: 7.5vh;
+   position: fixed;
+   width: 100%;
+   text-align: center;
+}
+
+.p-items{
+    background-color: white;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 70% 30%;
+    text-align: center;
+    height: 40px;
+   
+}
+.p-text{
+    display: grid;
+    grid-template-rows: 50% 50%;
+}
+
+.nombre{
+    position: relative;
+    top: 10%;
+}
+.descripcion{
+    font-size: 10px;
+}
+.precio{
+    position: relative;
+    top: 30%;
+}

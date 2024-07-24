@@ -4,9 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/scrypt.js">
+    <link rel="stylesheet" href="/reservas.css">
     <title>Document</title>
 </head>
 <body>
+   <div class="top-r">
+     <h2> apizza day</h2>
+     <h3>reservas</h3>
+     <a href="/index.html">home</a>
+   </div>
+   <div class="form-container">
+    <h3>Reservar Mesa</h3>
+    <form id="reservation-form">
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Correo Electrónico:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="phone">Teléfono:</label>
+        <input type="tel" id="phone" name="phone" required>
+
+        <label for="date">Fecha:</label>
+        <input type="date" id="date" name="date" required>
+
+        <label for="time">Hora:</label>
+        <input type="time" id="time" name="time" required>
+
+        <label for="guests">Número de Personas:</label>
+        <input type="number" id="guests" name="guests" required>
+
+        <button type="submit">Reservar</button>
+    </form>
+</div>
     
 </body>
 </html>

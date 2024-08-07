@@ -103,3 +103,23 @@ body {
     -ms-overflow-style: none; /* Oculta la barra de desplazamiento en Internet Explorer y Edge */
     scrollbar-width: none; /* Oculta la barra de desplazamiento en Firefox */
 }
+
+.tab {
+    width: 80%;
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.tab:hover {
+    background-color: #495057;
+}
+
+.tab.active {
+    background-color: #495057; /* Color para el botón activo */
+}

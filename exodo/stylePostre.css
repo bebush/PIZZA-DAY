@@ -1,0 +1,65 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.logo{
+    width: 100vw;
+    height: 15vh;
+    background-color: black;
+    color: white;
+    text-align: center;
+
+}
+
+.contenedor{
+    width: 100vw;
+    height: 80vh;
+    background-color: grey;
+    display: grid;
+    justify-content: center;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+.slot{
+    width: 80vw;
+    height: 100px;
+    background-color: white;
+    margin: 10px;   
+    border-radius: 15px; 
+    display: grid;
+    grid-template-columns: 75% 15%;       
+}
+
+.productoDescripcion{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+.producto{
+  text-align: center;
+  margin-top: 15px ;
+  font-size: 22px;
+  font-family: 'Arial Black', 'Arial', sans-serif;  
+  font-weight: 700  ;
+}
+.descripcion{
+  text-align: center;
+  font-size: 17px;
+}
+
+.precioBotones{
+    display: grid;
+    grid-template-rows: 1fr 1fr;    
+}
+.precio{
+    text-align: center;
+    margin-top: 25px ;
+   
+}
+.botones{
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    margin-bottom: 5px;   
+}

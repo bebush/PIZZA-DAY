@@ -1,0 +1,38 @@
+.contenedor-carrito {
+    padding: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.producto-info {
+    flex: 1;
+}
+
+.cantidad-controls {
+    display: flex;
+    align-items: center;
+}
+
+.boton-cantidad {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.boton-cantidad:hover {
+    background-color: #0056b3;
+}

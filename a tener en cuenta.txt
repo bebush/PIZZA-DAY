@@ -1,0 +1,333 @@
+ESTO SE PUEDE CAMBIAR POR...
+
+<?php
+include 'conexion.php';
+
+// Conectar a la base de datos
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Verificar la conexión
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
+function obtenerDato($conn, $tabla, $columna, $condicion = "1", $limite = 1, $offset = 0) {
+    $sql = "SELECT $columna FROM $tabla WHERE $condicion LIMIT $limite OFFSET $offset";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row[$columna];
+    } else {
+        return "No hay datos disponibles";
+    }
+}
+
+// Usar la función para obtener el segundo producto
+// list item 1
+$nombre_postre1 = obtenerDato($conn, "postres", "producto", "1", 1, 1);
+$nombre_descripcion1 = obtenerDato($conn, "postres", "descripcion", "1", 1, 1);
+$nombre_precio1 = obtenerDato($conn, "postres", "precio", "1", 1, 1);
+// list item 0
+$nombre_postre0 = obtenerDato($conn, "postres", "producto", "1", 1, 0);
+$nombre_descripcion0 = obtenerDato($conn, "postres", "descripcion", "1", 1, 0);
+$nombre_precio0 = obtenerDato($conn, "postres", "precio", "1", 1, 0);
+// list item 2
+$nombre_postre2 = obtenerDato($conn, "postres", "producto", "1", 1, 2);
+$nombre_descripcion2 = obtenerDato($conn, "postres", "descripcion", "1", 1, 2);
+$nombre_precio2 = obtenerDato($conn, "postres", "precio", "1", 1, 2);
+// list item 3
+$nombre_postre3 = obtenerDato($conn, "postres", "producto", "1", 1,3);
+$nombre_descripcion3 = obtenerDato($conn, "postres", "descripcion", "1", 1, 3);
+$nombre_precio3 = obtenerDato($conn, "postres", "precio", "1", 1, 3);
+// list item 4
+$nombre_postre4 = obtenerDato($conn, "postres", "producto", "1", 1, 4);
+$nombre_descripcion4 = obtenerDato($conn, "postres", "descripcion", "1", 1, 4);
+$nombre_precio4 = obtenerDato($conn, "postres", "precio", "1", 1, 4);
+// list item 5
+$nombre_postre5 = obtenerDato($conn, "postres", "producto", "1", 1, 5);
+$nombre_descripcion5 = obtenerDato($conn, "postres", "descripcion", "1", 1, 5);
+$nombre_precio5 = obtenerDato($conn, "postres", "precio", "1", 1, 5);
+
+// Cerrar la conexión
+$conn->close();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylePostre.css">
+    
+    <title>pizzaday</title>
+</head>
+<body>
+    <div class="logo">logo</div>
+    <div class="contenedor">
+
+    <div class="slot">
+
+      <div class="productoDescripcion">
+       <p class="producto"><?php echo $nombre_postre0; ?></p>
+       <p class="descripcion"><?php echo $nombre_descripcion0; ?></p>  
+       </div>
+
+          <div class="precioBotones">
+            <div class="precio"><?php echo $nombre_precio0; ?> $</div>
+            <div class="botones">
+               <button class="mas">+</button>
+              <button class="menos">-</button>
+           </div>
+
+          </div>
+       </div> 
+       <div class="slot">
+
+            <div class="productoDescripcion">
+            <p class="producto"><?php echo $nombre_postre1; ?></p>
+            <p class="descripcion"><?php echo $nombre_descripcion1; ?></p>  
+            </div>
+
+            <div class="precioBotones">
+            <div class="precio"><?php echo $nombre_precio1; ?> $</div>
+            <div class="botones">
+                <button class="mas">+</button>
+                <button class="menos">-</button>
+            </div>
+
+          </div>
+       </div>
+       <div class="slot">
+
+            <div class="productoDescripcion">
+            <p class="producto"><?php echo $nombre_postre2; ?></p>
+            <p class="descripcion"><?php echo $nombre_descripcion2; ?></p>  
+            </div>
+
+            <div class="precioBotones">
+            <div class="precio"><?php echo $nombre_precio2; ?> $</div>
+            <div class="botones">
+                <button class="mas">+</button>
+                <button class="menos">-</button>
+            </div>
+
+          </div>
+       </div>
+       <div class="slot">
+
+            <div class="productoDescripcion">
+            <p class="producto"><?php echo $nombre_postre3; ?></p>
+            <p class="descripcion"><?php echo $nombre_descripcion3; ?></p>  
+            </div>
+
+            <div class="precioBotones">
+            <div class="precio"><?php echo $nombre_precio3; ?> $</div>
+            <div class="botones">
+                <button class="mas">+</button>
+                <button class="menos">-</button>
+            </div>
+
+          </div>
+       </div>
+       <div class="slot">
+
+            <div class="productoDescripcion">
+            <p class="producto"><?php echo $nombre_postre4; ?></p>
+            <p class="descripcion"><?php echo $nombre_descripcion4; ?></p>  
+            </div>
+
+            <div class="precioBotones">
+            <div class="precio"><?php echo $nombre_precio4; ?> $</div>
+            <div class="botones">
+                <button class="mas">+</button>
+                <button class="menos">-</button>
+            </div>
+
+          </div>
+       </div>
+       <div class="slot">
+
+            <div class="productoDescripcion">
+            <p class="producto"><?php echo $nombre_postre5; ?></p>
+            <p class="descripcion"><?php echo $nombre_descripcion5; ?></p>  
+            </div>
+
+            <div class="precioBotones">
+            <div class="precio"><?php echo $nombre_precio5; ?> $</div>
+            <div class="botones">
+                <button class="mas">+</button>
+                <button class="menos">-</button>
+            </div>
+
+          </div>
+       </div>
+       
+    </div>
+
+
+
+        
+  <!-- <h1><?php echo $nombre_postre; ?></h1> -->
+    
+
+    <div class="p-pie"> all righ reserv</div>
+    <script src="/scrypt.js"></script>
+</body>
+</html>
+
+
+...ESTO
+
+<?php
+include 'conexion.php';
+
+// Conectar a la base de datos
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Verificar la conexión
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
+
+function obtenerDatos($conn, $tabla, $columnas, $limite = 6, $offset = 0) {
+    $columnas_str = implode(", ", $columnas);
+    $sql = "SELECT $columnas_str FROM $tabla LIMIT $limite OFFSET $offset";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $datos = [];
+        while ($row = $result->fetch_assoc()) {
+            $datos[] = $row;
+        }
+        return $datos;
+    } else {
+        return [];
+    }
+}
+
+// Obtener datos de los productos
+$columnas = ['producto', 'descripcion', 'precio'];
+$productos = obtenerDatos($conn, "postres", $columnas, 6);
+
+// Cerrar la conexión
+$conn->close();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylePostre.css">
+    <title>pizzaday</title>
+</head>
+<body>
+    <div class="logo">logo</div>
+    <div class="contenedor">
+        <?php foreach ($productos as $producto): ?>
+        <div class="slot">
+            <div class="productoDescripcion">
+                <p class="producto"><?php echo $producto['producto']; ?></p>
+                <p class="descripcion"><?php echo $producto['descripcion']; ?></p>  
+            </div>
+            <div class="precioBotones">
+                <div class="precio"><?php echo $producto['precio']; ?> $</div>
+                <div class="botones">
+                    <button class="mas">+</button>
+                    <button class="menos">-</button>
+                </div>
+            </div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+
+    <div class="p-pie"> all right reserved</div>
+    <script src="/scrypt.js"></script>
+</body>
+</html>
+
+TENER EN CUENTA PARA FUTURAS IDEAS.
+
+
+ESTO ES PARA EDITAR UNA SOLA PARTE
+<?php
+include 'conexion.php';
+
+// Conectar a la base de datos
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Verificar la conexión
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
+
+function obtenerDatos($conn, $tabla, $columnas, $limite = 6, $offset = 0) {
+    $columnas_str = implode(", ", $columnas);
+    $sql = "SELECT $columnas_str FROM $tabla LIMIT $limite OFFSET $offset";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $datos = [];
+        while ($row = $result->fetch_assoc()) {
+            $datos[] = $row;
+        }
+        return $datos;
+    } else {
+        return [];
+    }
+}
+
+// Obtener datos de los productos
+$columnas = ['producto', 'descripcion', 'precio'];
+$productos = obtenerDatos($conn, "postres", $columnas, 6);
+
+// Cerrar la conexión
+$conn->close();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylePostre.css">
+    <title>pizzaday</title>
+</head>
+<body>
+    <div class="logo">logo</div>
+    <div class="contenedor">
+        <?php 
+        $contador = 0; // Iniciamos un contador
+        foreach ($productos as $producto): 
+        ?>
+        <div class="slot">
+            <div class="productoDescripcion">
+                <p class="producto">
+                    <?php 
+                    if ($contador == 2) { // Si es el tercer ítem
+                        echo "<strong>" . $producto['producto'] . "</strong>"; // Edita el ítem de manera especial
+                    } else {
+                        echo $producto['producto'];
+                    }
+                    ?>
+                </p>
+                <p class="descripcion"><?php echo $producto['descripcion']; ?></p>  
+            </div>
+            <div class="precioBotones">
+                <div class="precio"><?php echo $producto['precio']; ?> $</div>
+                <div class="botones">
+                    <button class="mas">+</button>
+                    <button class="menos">-</button>
+                </div>
+            </div>
+        </div>
+        <?php 
+        $contador++; // Incrementamos el contador en cada iteración
+        endforeach; 
+        ?>
+    </div>
+
+    <div class="p-pie"> all right reserved</div>
+    <script src="/scrypt.js"></script>
+</body>
+</html>

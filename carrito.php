@@ -21,8 +21,7 @@ $carrito = isset($_SESSION['carrito']) ? $_SESSION['carrito'] : [];
             <li>
                 <?php echo $item['nombre']; ?> - 
                 <?php echo $item['cantidad']; ?> x $<?php echo $item['precio']; ?> = $<?php echo $item['cantidad'] * $item['precio']; ?>
-                <button class="mas" data-nombre="<?php echo htmlspecialchars($key); ?>" data-precio="<?php echo $item['precio']; ?>">+</button>
-                <button class="menos" data-nombre="<?php echo htmlspecialchars($key); ?>" data-precio="<?php echo $item['precio']; ?>">-</button>
+               
             </li>
             <?php endforeach; ?>
         </ul>

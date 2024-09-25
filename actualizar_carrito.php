@@ -7,9 +7,7 @@ if (!isset($_SESSION['carrito'])) {
 }
 
 // Recibir datos POST
-$accion = $_POST['accion'];
-$nombre = $_POST['nombre'];
-$precio = (float) $_POST['precio']; // Asegurarnos de que el precio es float
+$accion = $_POST['accion'] ?? null; // Evita errores si no se define
 
 // Función para agregar producto
 function agregarProducto($nombre, $precio) {
@@ -37,11 +35,30 @@ function restarProducto($nombre) {
 
 // Lógica para agregar o restar productos
 if ($accion === 'agregar') {
-    agregarProducto($nombre, $precio);
+    $nombre = $_POST['nombre'] ?? '';
+    $precio = (float) ($_POST['precio'] ?? 0); // Asegurarnos de que el precio es float
+    
+    if ($nombre && $precio > 0) { // Validación
+        agregarProducto($nombre, $precio);
+    } else {
+        echo json_encode(['error' => 'Nombre o precio inválido.']);
+        exit;
+    }
 } elseif ($accion === 'restar') {
-    restarProducto($nombre);
+    $nombre = $_POST['nombre'] ?? '';
+    
+    if ($nombre) { // Validación
+        restarProducto($nombre);
+    } else {
+        echo json_encode(['error' => 'Nombre inválido.']);
+        exit;
+    }
+} elseif ($accion === 'obtener') {
+    // Retorna el carrito actualizado sin hacer cambios
+    echo json_encode($_SESSION['carrito']);
+    exit;
 }
 
-// Opcional: Imprimir el contenido del carrito para depurar
+// Retorna el carrito actualizado
 echo json_encode($_SESSION['carrito']);
 ?>

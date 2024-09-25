@@ -1,17 +1,26 @@
-*{
+/* Reset general */
+* {
     margin: 0;
     padding: 0;
 }
-.logo{
+
+body {
+    overflow: hidden;
+}
+
+/* Estilo para el logo */
+.logo {
     width: 100vw;
     height: 15vh;
     background-color: black;
     color: white;
     text-align: center;
-
+    line-height: 15vh;
+    font-size: 24px;
 }
 
-.contenedor{
+/* Contenedor principal */
+.contenedor {
     width: 100vw;
     height: 80vh;
     background-color: grey;
@@ -19,47 +28,130 @@
     justify-content: center;
     overflow-y: scroll;
     scrollbar-width: none;
+    padding: 20px 0;
 }
 
-.slot{
+.slot {
+    position: relative;
     width: 80vw;
     height: 100px;
     background-color: white;
-    margin: 10px;   
-    border-radius: 15px; 
+    margin: 10px;
+    border-radius: 15px;
     display: grid;
-    grid-template-columns: 75% 15%;       
+    grid-template-columns: 75% 15%;
+    align-items: center;
+    padding: 10px;
 }
 
-.productoDescripcion{
+/* Descripción del producto */
+.productoDescripcion {
     display: grid;
     grid-template-rows: 1fr 1fr;
 }
 
-.producto{
-  text-align: center;
-  margin-top: 15px ;
-  font-size: 22px;
-  font-family: 'Arial Black', 'Arial', sans-serif;  
-  font-weight: 700  ;
-}
-.descripcion{
-  text-align: center;
-  font-size: 17px;
+.producto {
+    text-align: center;
+    font-size: 22px;
+    font-family: 'Arial Black', 'Arial', sans-serif;
+    font-weight: 700;
 }
 
-.precioBotones{
-    display: grid;
-    grid-template-rows: 1fr 1fr;    
-}
-.precio{
+.descripcion {
     text-align: center;
-    margin-top: 25px ;
-   
+    font-size: 17px;
 }
-.botones{
+
+/* Sección de precio y botones */
+.precioBotones {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+.precio {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.botones {
     margin-top: 10px;
     display: grid;
-    grid-template-columns: 1fr 1fr ;
-    margin-bottom: 5px;   
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+}
+
+/* Estilos del carrito */
+.div-carrito-logo {
+    position: fixed;
+    top: 10px;
+    left: 10px; /* Posición inicial */
+    width: 70px;
+    height: 70px;
+    z-index: 20;
+    transition: transform 0.4s ease-in-out; /* Añadir animación suave para el desplazamiento */
+}
+
+.carrito-logo {
+    width: 100%;
+    height: 100%;
+}
+
+.menu-carrito {
+    position: fixed;
+    top: 0;
+    left: -350px;
+    height: 100%;
+    width: 300px;
+    background-color: lightgrey;
+    transition: left 0.4s ease-in-out; /* Cambié a 'left' para el menú */
+    z-index: 100;
+}
+
+.menu-carrito.active {
+    left: 0;
+}
+
+.contenedor-carrito {
+    margin: 20px;
+    text-align: center;
+}
+
+.boton-footer {
+    width: 100%;
+    padding: 10px;
+    background-color: black;
+    color: white;
+    border: none;
+    margin-top: 15px;
+}
+
+.p-pie {
+    height: 5vh;
+    background-color: black;
+    color: white;
+    text-align: center;
+    line-height: 5vh;
+}
+
+/* Estilo del contador */
+.contador {
+    position: absolute; /* Para que se posicione respecto al contenedor padre */
+    top: 10px; /* Espaciado desde la parte superior */
+    right: 10px; /* Espaciado desde la derecha */
+    background-color: grey; /* Fondo gris */
+    color: white; /* Color del texto */
+    border-radius: 50%; /* Hacerlo circular */
+    width: 30px; /* Ancho del círculo */
+    height: 30px; /* Alto del círculo */
+    display: flex; /* Para centrar el texto */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    font-weight: bold; /* Resaltar el número */
+    font-size: 14px; /* Tamaño del número */
+}
+
+.masc .menosc {
+    display: none;
+    visibility: hidden;
 }

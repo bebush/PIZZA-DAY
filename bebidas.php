@@ -30,6 +30,9 @@ function obtenerDatos($conn, $tabla, $columnas, $limite = 6, $offset = 0) {
 $columnas = ['producto', 'descripcion', 'precio'];
 $productos = obtenerDatos($conn, "bebidas", $columnas, 6);
 
+// Obtener el carrito de la sesión
+$carrito = isset($_SESSION['carrito']) ? $_SESSION['carrito'] : [];
+
 // Cerrar la conexión
 $conn->close();
 ?>
@@ -40,76 +43,99 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="stylePostre.css">
-    <title>pizzaday</title>
+    <title>Pizzaday - Bebidas</title>
+    <script src="carrito.js" defer></script>
+
 </head>
 <body>
-    <div class="logo">logo</div>
+    <a href="#" class="div-carrito-logo" id="carrito-toggle">
+        <img src="https://imgs.search.brave.com/YTMltGz-gA7Tl3n8S55llzBxTrU71GXA8kAejh69gcE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudmV4ZWxzLmNv/bS9tZWRpYS91c2Vy/cy8zLzIwMDA5Ny9p/c29sYXRlZC9wcmV2/aWV3Lzk0MjgyMDgz/NjI0NmYwOGMyZDZi/ZTIwYTQ1YTg0MTM5/LWljb25vLWRlLWNh/cnJpdG8tZGUtY29t/cHJhcy1jYXJyaXRv/LWRlLWNvbXByYXMu/cG5n" alt="carrito" class="carrito-logo">
+        
+    </a>
+
+    <div class="menu-carrito" id="menu-carrito">
+        <div class="contenedor-carrito">
+            <h4>Productos en el carrito:</h4>
+            <ul>
+                <?php foreach ($carrito as $item): ?>
+                    <li><?php echo htmlspecialchars($item['nombre']); ?> - Cantidad: <?php echo $item['cantidad']; ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+        <button class="boton-footer" id="seguir-comprando">Seguir comprando</button>
+        <form action="pago.php" method="post">
+            <input type="hidden" name="total" value="0"> <!-- Puedes actualizar el total aquí -->
+            <button class="boton-footer" name="pagar">Realizar compra</button>
+        </form>
+    </div>
+
+    <div class="logo">Logo</div>
     <div class="contenedor">
         <?php foreach ($productos as $index => $producto): ?>
         <div class="slot">
             <div class="productoDescripcion">
-                <p class="producto"><?php echo $producto['producto']; ?></p>
-                <p class="descripcion"><?php echo $producto['descripcion']; ?></p>  
+                <p class="producto"><?php echo htmlspecialchars($producto['producto']); ?></p>
+                <p class="descripcion"><?php echo htmlspecialchars($producto['descripcion']); ?></p>
             </div>
             <div class="precioBotones">
                 <div class="precio"><?php echo $producto['precio']; ?> $</div>
                 <div class="botones">
-                    <button class="mas" data-index="<?php echo $index; ?>" data-precio="<?php echo $producto['precio']; ?>" data-nombre="<?php echo $producto['producto']; ?>">+</button>
-                    <button class="menos" data-index="<?php echo $index; ?>" data-precio="<?php echo $producto['precio']; ?>" data-nombre="<?php echo $producto['producto']; ?>">-</button>
+                    <button class="mas" data-nombre="<?php echo htmlspecialchars($producto['producto']); ?>" data-precio="<?php echo $producto['precio']; ?>">+</button>
+                    <button class="menos" data-nombre="<?php echo htmlspecialchars($producto['producto']); ?>" data-precio="<?php echo $producto['precio']; ?>">-</button>
                 </div>
+            </div>
+            <div class="contador" data-nombre="<?php echo htmlspecialchars($producto['producto']); ?>">
+                <?php echo isset($carrito[$producto['producto']]) ? $carrito[$producto['producto']]['cantidad'] : 0; ?>
             </div>
         </div>
         <?php endforeach; ?>
         <a href="carrito.php">Ver carrito</a>
-
     </div>
 
-    <div class="p-pie"> all right reserved</div>
- 
+    <div class="p-pie">All rights reserved</div>
+
     <script>
-document.addEventListener('DOMContentLoaded', () => {
-    // Funciones para agregar o restar productos al carrito y enviarlos a carrito.php
-    document.querySelectorAll('.mas').forEach(boton => {
-        boton.addEventListener('click', () => {
-            const index = boton.dataset.index;
-            const nombre = boton.dataset.nombre;
-            const precio = boton.dataset.precio;
+    document.addEventListener('DOMContentLoaded', () => {
+        // Funciones para manejar el toggle del carrito y el scroll position
+        document.getElementById('carrito-toggle').addEventListener('click', function(event) {
+            event.preventDefault();
+            const menuCarrito = document.getElementById('menu-carrito');
+            const carritoLogo = document.querySelector('.div-carrito-logo');
+            menuCarrito.classList.toggle('active');
 
-            // Enviar la información al carrito usando AJAX
-            fetch('actualizar_carrito.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: `accion=agregar&index=${index}&nombre=${nombre}&precio=${precio}`
-            })
-            .then(response => response.text())
-            .then(data => console.log(data))
-            .catch(error => console.error('Error:', error));
+            if (menuCarrito.classList.contains('active')) {
+                carritoLogo.style.transform = 'translateX(300px)'; // Mueve el logo a la derecha
+            } else {
+                carritoLogo.style.transform = 'translateX(0)'; // Vuelve a la posición original
+            }
+        });
+
+        document.getElementById('seguir-comprando').addEventListener('click', function() {
+            const menuCarrito = document.getElementById('menu-carrito');
+            const carritoLogo = document.querySelector('.div-carrito-logo');
+            menuCarrito.classList.remove('active');
+            carritoLogo.style.transform = 'translateX(0)'; // Vuelve a la posición original
+        });
+
+        // Funciones para agregar o restar productos al carrito y enviarlos a actualizar_carrito.php
+        document.querySelectorAll('.mas').forEach(boton => {
+            boton.addEventListener('click', (event) => {
+                event.preventDefault();
+                const nombre = boton.dataset.nombre;
+                const precio = boton.dataset.precio;
+                enviarSolicitud('agregar', nombre, precio);
+            });
+        });
+
+        document.querySelectorAll('.menos').forEach(boton => {
+            boton.addEventListener('click', (event) => {
+                event.preventDefault();
+                const nombre = boton.dataset.nombre;
+                const precio = boton.dataset.precio;
+                enviarSolicitud('restar', nombre, precio);
+            });
         });
     });
-
-    document.querySelectorAll('.menos').forEach(boton => {
-        boton.addEventListener('click', () => {
-            const index = boton.dataset.index;
-            const nombre = boton.dataset.nombre;
-            const precio = boton.dataset.precio;
-
-            // Enviar la información al carrito usando AJAX
-            fetch('actualizar_carrito.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: `accion=restar&index=${index}&nombre=${nombre}&precio=${precio}`
-            })
-            .then(response => response.text())
-            .then(data => console.log(data))
-            .catch(error => console.error('Error:', error));
-        });
-    });
-});
-</script>
-
+    </script>
 </body>
 </html>

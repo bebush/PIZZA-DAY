@@ -39,6 +39,7 @@ foreach ($carrito as $item) {
 
     <form action="guardar_pedido.php" method="post">
         <input type="hidden" name="total" value="<?php echo $total; ?>">
+        
         <label for="nombre">Nombre:</label>
         <input type="text" id="nombre" name="nombre" required>
 
@@ -47,6 +48,13 @@ foreach ($carrito as $item) {
 
         <label for="direccion">Dirección:</label>
         <input type="text" id="direccion" name="direccion" required>
+
+        
+        <label for="metodo_entrega">Método de entrega:</label>
+        <select id="metodo_entrega" name="metodo_entrega" required>
+            <option value="local">Retirar en el local</option>
+            <option value="delivery">Delivery</option>
+        </select>
 
         <label for="comentario">Comentario (opcional):</label>
         <textarea id="comentario" name="comentario" rows="4"></textarea>

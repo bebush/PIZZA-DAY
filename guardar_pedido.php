@@ -19,21 +19,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $comentario = isset($_POST['comentario']) ? $_POST['comentario'] : ''; // Hacer el comentario opcional
     $total = $_POST['total'];
     $metodo_pago = $_POST['metodo_pago'];
+    $metodo_entrega = $_POST['metodo_entrega']; // Recuperar el método de entrega (RoD)
 
     // Preparar la consulta para insertar el pedido
-    $sql = "INSERT INTO pedidos (nombre, celular, direccion, comentario, total, metodo_pago) VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO pedidos (nombre, celular, direccion, comentario, total, metodo_pago, RoD) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
     // Verificar si la preparación fue exitosa
     if ($stmt) {
-        $stmt->bind_param("ssssss", $nombre, $celular, $direccion, $comentario, $total, $metodo_pago);
+        // Asociar los parámetros a la consulta
+        $stmt->bind_param("sssssss", $nombre, $celular, $direccion, $comentario, $total, $metodo_pago, $metodo_entrega);
 
         // Ejecutar la consulta y manejar el resultado
         if ($stmt->execute()) {
             // Guardar información del pedido en la sesión
             $_SESSION['nombre'] = $nombre; // Guardar el nombre del cliente
             $_SESSION['total'] = $total; // Guardar el total del pedido
-            
+
             unset($_SESSION['carrito']); // Limpiar el carrito
             
             // Redirigir a una página de agradecimiento

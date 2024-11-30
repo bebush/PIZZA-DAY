@@ -94,8 +94,12 @@ $conn->close();
             background-color: #2980b9;
         }
 
-        /* Estilo de las reservas */
-        .reserva {
+        .active {
+            background-color: #2980b9;
+        }
+
+        /* Estilo de las reservas y pedidos */
+        .reserva, .pedido {
             border: 1px solid #ddd;
             margin: 10px 0;
             padding: 15px;
@@ -104,24 +108,40 @@ $conn->close();
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        .reserva h2 {
+        .reserva h2, .pedido h2 {
             margin: 0 0 10px;
             font-size: 1.6em;
             color: #333;
         }
 
-        .reserva p {
+        .reserva p, .pedido p {
             margin: 8px 0;
             font-size: 1em;
         }
 
-        .reserva strong {
+        .reserva strong, .pedido strong {
             color: #555;
         }
 
-        .reserva .comentario {
-            font-style: italic;
-            color: #666;
+        .estado-pedido {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .estado-boton {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: gray; /* Estado inicial: gris */
+            margin-right: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .estado-texto {
+            font-weight: bold;
+            color: #555;
         }
     </style>
 </head>
@@ -129,10 +149,22 @@ $conn->close();
     <div class="logo">Logo</div>
     <div>
         <div>
-            <button>Pedidos</button>
-            <button>Reservas</button>
+            <button onclick="mostrarPedidos()">Pedidos</button>
+            <button onclick="mostrarReservas()" class="active">Reservas</button>
         </div>
-        <div>
+        <div id="lista-pedidos" style="display: none;">
+            <div class="pedido">
+                <h2>Ejemplo de Pedido</h2>
+                <p><strong>Detalle:</strong> Detalles del pedido...</p>
+                
+                <!-- Botón de estado del pedido -->
+                <div class="estado-pedido">
+                    <div class="estado-boton" onclick="cambiarEstado(this, 'en_proceso')"></div>
+                    <span class="estado-texto">En Proceso</span>
+                </div>
+            </div>
+        </div>
+        <div id="lista-reservas">
             <?php foreach ($reservas as $reserva): ?>
                 <div class="reserva">
                     <h2><?php echo htmlspecialchars($reserva['nombre']); ?></h2>
@@ -142,9 +174,52 @@ $conn->close();
                     <p><strong>Personas:</strong> <?php echo htmlspecialchars($reserva['personas']); ?></p>
                     <p class="comentario"><?php echo htmlspecialchars($reserva['comentario']); ?></p>
                     <p><strong>Fecha de Reserva:</strong> <?php echo htmlspecialchars($reserva['fechareserva']); ?></p>
+
+                    <!-- Botón de estado de la reserva -->
+                    <div class="estado-pedido">
+                        <div class="estado-boton" onclick="cambiarEstado(this, 'en_proceso')"></div>
+                        <span class="estado-texto">En Proceso</span>
+                    </div>
                 </div>
             <?php endforeach; ?>
         </div>
     </div>
+
+    <script>
+        function mostrarPedidos() {
+            document.getElementById('lista-pedidos').style.display = 'block';
+            document.getElementById('lista-reservas').style.display = 'none';
+            document.querySelector('button[onclick="mostrarPedidos()"]').classList.add('active');
+            document.querySelector('button[onclick="mostrarReservas()"]').classList.remove('active');
+        }
+
+        function mostrarReservas() {
+            document.getElementById('lista-reservas').style.display = 'block';
+            document.getElementById('lista-pedidos').style.display = 'none';
+            document.querySelector('button[onclick="mostrarPedidos()"]').classList.remove('active');
+            document.querySelector('button[onclick="mostrarReservas()"]').classList.add('active');
+        }
+
+        function cambiarEstado(elemento, estado) {
+            const textoElemento = elemento.nextElementSibling;
+
+            if (estado === 'en_proceso') {
+                elemento.style.backgroundColor = 'gray';
+                textoElemento.textContent = 'En Proceso';
+                textoElemento.style.color = '#555';
+                elemento.onclick = () => cambiarEstado(elemento, 'pedido_hecho');
+            } else if (estado === 'pedido_hecho') {
+                elemento.style.backgroundColor = 'green';
+                textoElemento.textContent = 'Pedido Hecho';
+                textoElemento.style.color = 'green';
+                elemento.onclick = () => cambiarEstado(elemento, 'rechazado');
+            } else if (estado === 'rechazado') {
+                elemento.style.backgroundColor = 'red';
+                textoElemento.textContent = 'Rechazado';
+                textoElemento.style.color = 'red';
+                elemento.onclick = () => cambiarEstado(elemento, 'en_proceso');
+            }
+        }
+    </script>
 </body>
 </html>
